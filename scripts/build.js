@@ -16,30 +16,40 @@ const www = path.resolve(__dirname, '..', 'www')
 const wwwCss = path.join(www, 'index.css')
 const wwwHtml = path.join(www, 'index.html')
 
-function renderSass(dest, options) {
+const groups = require('../src/groups.json')
+
+function renderSass(destPath, options) {
   return new Promise((resolve, reject) => {
     sass.render(options, (err, result) => {
       if(err) return reject(err)
       cleaner.process(result.css)
         .then(cleaned => prefixer.process(cleaned.css))
-        .then(prefixed => fs.outputFile(dest, prefixed.css))
+        .then(prefixed => fs.outputFile(destPath, prefixed.css))
         .then(() => resolve())
         .catch(err => reject(err))
     })
   })
 }
 
-function renderPug(src, dest, options) {
+function renderPug(srcPath, destPath, options) {
   return new Promise((resolve, reject) => {
     let html
     try {
-      html = pug.renderFile(src, options)
+      html = pug.renderFile(srcPath, options)
     } catch(e) {
       return reject(e)
     }
-    fs.outputFile(dest, html)
+    fs.outputFile(destPath, html)
       .then(() => resolve())
       .catch(err => reject(err))
+  })
+}
+
+function renderJs(srcPath, destPath, options) {
+  return new Promise((resolve, reject) => {
+    fs.copy(path.join(srcPath, 'index.js'), path.join(destPath, 'index.js'))
+      .then(() => fs.copy(path.join(srcPath, 'groups.js'), path.join(destPath, 'groups.js')))
+      .then(() => fs.copy(path.join(srcPath, 'fonts'), path.join(destPath, 'fonts')))
   })
 }
 
@@ -49,10 +59,8 @@ renderSass(wwwCss, {
   includePaths: [],
   outputStyle: "expanded"
 })
-.then(() => renderPug(srcPug, wwwHtml, {  }))
-.then(() => fs.copy(path.join(src, 'index.js'), path.join(www, 'index.js')))
-.then(() => fs.copy(path.join(src, 'groups.js'), path.join(www, 'groups.js')))
-.then(() => fs.copy(path.join(src, 'fonts'), path.join(www, 'fonts')))
+.then(() => renderPug(srcPug, wwwHtml, { groups: groups }))
+.then(() => renderJs(src, www))
 .then(() => {
   console.log('Success')
 })

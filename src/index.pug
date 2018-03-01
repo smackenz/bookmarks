@@ -11,5 +11,8 @@ html(lang="en")
         a(href="http://smackenz.github.io/bookmarks/www") Bookmarks
       #content
     iframe#viewer(name="viewer", allowfullscreen, allowvr)
-    script(src="groups.js")
+    - var dataString = groups ? JSON.stringify(groups) : '[]';
+    script(type="text/javascript").
+      var groups = !{dataString};
+    //- script(src="groups.js")
     script(src="index.js")

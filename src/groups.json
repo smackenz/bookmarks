@@ -1,12 +1,11 @@
-var groups = [
+[
   {
     "id": "development",
     "text": "Development",
     "items": [
       { "text": "Dirty Markup", "url": "https://www.10bestdesign.com/dirtymarkup/" },
-      { "text": "JSON", "url": "http://json.parser.online.fr/" },
-      { "text": "GitHub", "url": "https://github.com/" },
-      { "text": "GitHub: smackenz", "url": "https://github.com/smackenz" }
+      { "text": "JSON", "url": "https://jsoneditoronline.org/" },
+      { "text": "http-server", "url": "https://www.npmjs.com/package/http-server" }
     ]
   },
   {
@@ -32,4 +31,4 @@ var groups = [
       { "text": "Octicons", "url": "https://octicons.github.com/" }
     ]
   }
-];
+]
