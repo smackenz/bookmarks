@@ -21,7 +21,8 @@
     "text": "GitHub",
     "items": [
       { "text": "Home", "url": "https://github.com/" },
-      { "text": "smackenz", "url": "https://api.github.com/repos/smackenz/bookmarks/contents/README.md" },
+      { "text": "smackenz", "url": "https://smackenz.github.io" },
+      { "text": "smackenz api", "url": "https://api.github.com/repos/smackenz/bookmarks/contents/README.md" },
       { "text": "smackenz raw", "url": "https://raw.githubusercontent.com/smackenz/bookmarks/contents/README.md" }
     ]
   },
