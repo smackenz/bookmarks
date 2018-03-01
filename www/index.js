@@ -34,8 +34,23 @@ function createLink(text, url) {
   if(url) link.setAttribute('data-url', url);
   link.addEventListener('click', function (event) {
     event.preventDefault();
-    $viewer.setAttribute('src', url);
-    selectItem(url)
+    selectItem(url);
+    if(url.indexOf('api.github') >= 0) {
+      fetch(url)
+        .then(function(result) {
+          return result.json();
+        })
+        .then(function(result) {
+          console.log(result);
+          var base = "data:text/html;base64," + result.content
+          $viewer.setAttribute('src', base);
+        })
+        .catch(function(err) {
+          console.log(err);
+        })
+    } else {
+      $viewer.setAttribute('src', url);
+    }
   });
   return link;
 }
